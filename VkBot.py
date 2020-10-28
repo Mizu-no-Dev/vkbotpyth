@@ -44,16 +44,34 @@ for event in longpoll.listen():
             print(id)
 
             if msg == 'привет' or msg == '[club199223097|@vkbotm] привет':
-                senderC(id, 'Приветствую тебя!')
+                f = open('Settings.txt', 'r')
+                sett = f.read()
+                f.close()
+                if sett == 'normal':
+                    senderC(id, 'Приветствую тебя!')
+                if sett == 'debug':
+                    senderC(id, 'Проводится отладка бота, пожалуйста подождите.')
 
             if msg == 'пока' or msg == '[club199223097|@vkbotm] пока':
-                senderC(id, 'Пока)')
+                f = open('Settings.txt', 'r')
+                sett = f.read()
+                f.close()
+                if sett == 'normal':
+                    senderC(id, 'Пока)')
+                if sett == 'debug':
+                    senderC(id, 'Проводится отладка бота, пожалуйста подождите.')
 
             if msg == 'погода' or msg == '[club199223097|@vkbotm] погода':
-                res = requests.get("http://api.openweathermap.org/data/2.5/find", {'q': city, 'lang': 'ru', 'units': 'metric', 'APPID': appid})
-                data = res.json()
-                weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + ".\n" + "Температура: " + str(data['list'][0]['main']['temp']) + "°C")
-                senderC(id, weath)
+                f = open('Settings.txt', 'r')
+                sett = f.read()
+                f.close()
+                if sett == 'normal':
+                    res = requests.get("http://api.openweathermap.org/data/2.5/find", {'q': city, 'lang': 'ru', 'units': 'metric', 'APPID': appid})
+                    data = res.json()
+                    weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + ".\n" + "Температура: " + str(data['list'][0]['main']['temp']) + "°C")
+                    senderC(id, weath)
+                if sett == 'debug':
+                    senderC(id, 'Проводится отладка бота, пожалуйста подождите.')
 
         if event.from_user:
             msg = event.object.message['text']
@@ -63,13 +81,63 @@ for event in longpoll.listen():
             print(id)
 
             if msg == 'привет' or msg == '[club199223097|@vkbotm] привет':
-                senderU(id, 'Приветствую тебя!')
+                f = open('Settings.txt', 'r')
+                sett = f.read()
+                f.close()
+                if sett == 'normal':
+                    senderU(id, 'Приветствую тебя!')
+                if sett == 'debug':
+                    senderU(id, 'Проводится отладка бота, пожалуйста подождите.')
 
             if msg == 'пока' or msg == '[club199223097|@vkbotm] пока':
-                senderU(id, 'Пока)')
+                f = open('Settings.txt', 'r')
+                sett = f.read()
+                f.close()
+                if sett == 'normal':
+                    senderU(id, 'Пока)')
+                if sett == 'debug':
+                    senderU(id, 'Проводится отладка бота, пожалуйста подождите.')
 
             if msg == 'погода' or msg == '[club199223097|@vkbotm] погода':
-                res = requests.get("http://api.openweathermap.org/data/2.5/find", {'q': city, 'lang': 'ru', 'units': 'metric', 'APPID': appid})
-                data = res.json()
-                weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + ".\n" + "Температура: " + str(data['list'][0]['main']['temp']) + "°C")
-                senderU(id, weath)
+                f = open('Settings.txt', 'r')
+                sett = f.read()
+                f.close()
+                if sett == 'normal':
+                    res = requests.get("http://api.openweathermap.org/data/2.5/find", {'q': city, 'lang': 'ru', 'units': 'metric', 'APPID': appid})
+                    data = res.json()
+                    weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + ".\n" + "Температура: " + str(data['list'][0]['main']['temp']) + "°C")
+                    senderU(id, weath)
+                if sett == 'debug':
+                    senderU(id, 'Проводится отладка бота, пожалуйста подождите.')
+
+            if msg == '/mode debug':
+                if id == 389397419:
+                    f = open('Settings.txt', 'r')
+                    sett = f.read()
+                    f.close()
+                    if sett == 'normal':
+                        f = open('Settings.txt', 'w')
+                        f.write('debug')
+                        f.close()
+                        senderU(id, 'Бот перешёл в режим "debug"')
+                        print('OK')
+                    else:
+                        senderU(id, 'Сейчас и так режим "debug"')
+                else:
+                    senderU(id, 'Вы не имеете прав доступа к командам разработчика!')
+
+            if msg == '/mode normal':
+                if id == 389397419:
+                    f = open('Settings.txt', 'r')
+                    sett = f.read()
+                    f.close()
+                    if sett == 'debug':
+                        f = open('Settings.txt', 'w')
+                        f.write('normal')
+                        f.close()
+                        senderU(id, 'Бот перешёл в режим "normal"')
+                        print('OK')
+                    else:
+                        senderU(id, 'Сейчас и так режим "normal"')
+                else:
+                    senderU(id, 'Вы не имеете прав доступа к командам разработчика!')
