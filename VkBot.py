@@ -151,7 +151,7 @@ for event in longpoll.listen():
                 else:
                     senderU(id, 'В сообщении не обнаружено вложение.')
 
-            os.remove(filename)
+                os.remove(filename)
 
             if msg == 'привет' or msg == '[club199223097|@vkbotm] привет':
                 f = open('Settings.txt', 'r')
