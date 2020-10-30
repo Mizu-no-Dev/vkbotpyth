@@ -1,6 +1,12 @@
 import requests
 import vk_api, json
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+import cv2
+import pytesseract
+import random
+import os
+
+pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 vk_session = vk_api.VkApi(token = '2649bbdb23bbecc3c2224e594d3cc0bda2076c995c7f71ab16b10b184e29023afd85534814ffd051942cc')
 longpoll = VkBotLongPoll(vk_session, '199223097')
@@ -32,7 +38,6 @@ def senderU(id, text):
 
 def senderC(id, text):
     vk_session.method('messages.send', {'chat_id':id, 'message': text, 'random_id':0, 'keyboard': keyboard})
-
 
 for event in longpoll.listen():
     if event.type == VkBotEventType.MESSAGE_NEW:
@@ -79,6 +84,74 @@ for event in longpoll.listen():
             id = event.message.from_id
             print(msg)
             print(id)
+
+            if msg == '/text ru' or msg == '/text en' or msg == '/text':
+                history = vk_session.method("messages.getHistory", {'user_id':id, 'count':1})
+                attach = history['items'][0]['attachments']
+                print(attach)
+                check = len(attach)
+                print(check)
+                if check != 0:
+                    g = -1
+                    f = history['items'][0]['attachments'][0]['photo']['sizes'][-1]['type']
+                    
+                    if f != 'w':
+                        while f != 'w':
+                            if g == -8:
+                                break
+                            g = g - 1
+                            f = history['items'][0]['attachments'][0]['photo']['sizes'][g]['type']                    
+                    if f != 'w':
+                        g = -1
+                        while f != 'z':
+                            if g == -7:
+                                break
+                            g = g - 1
+                            f = history['items'][0]['attachments'][0]['photo']['sizes'][g]['type']
+                        if f != 'z':
+                            g = -1
+                            while f != 'y':
+                                g = g - 1
+                                f = history['items'][0]['attachments'][0]['photo']['sizes'][g]['type']
+
+                    photo_url = history['items'][0]['attachments'][0]['photo']['sizes'][g]['url']
+                    print(f)
+                    filename = photo_url.split('/')[-1]
+                    filename = filename[:filename.find('?')]              
+                    p = requests.get(photo_url)
+                    photo = open(filename, "wb")
+                    photo.write(p.content)
+                    photo.close()
+                    print(filename)
+
+                    config = r'--oem 3 --psm 6'
+                    if msg == '/text ru':
+                        img = cv2.imread(filename)
+                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                        ToP = str(pytesseract.image_to_string(img, lang = 'rus'))
+
+                    if msg == '/text en':
+                        img = cv2.imread(filename)
+                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                        ToP = str(pytesseract.image_to_string(img, lang = 'eng'))
+
+                    if msg == '/text':
+                        img = cv2.imread(filename)
+                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                        ToP = str(pytesseract.image_to_string(img, lang = 'eng+rus'))
+
+                    print(ToP)
+                    t = len(ToP)
+                    if t > 3:
+                        senderU(id, ToP)
+
+                    else:
+                        senderU(id, 'Текст не обнаружен.')
+
+                else:
+                    senderU(id, 'В сообщении не обнаружено вложение.')
+
+            os.remove(filename)
 
             if msg == 'привет' or msg == '[club199223097|@vkbotm] привет':
                 f = open('Settings.txt', 'r')
