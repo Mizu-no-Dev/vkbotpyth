@@ -6,7 +6,7 @@ import pytesseract
 import random
 import os
 
-pytesseract.pytesseract.tesseract_cmd = 'vkbotpyth\\Tesseract-OCR\\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = 'https://github.com/Mizu-no-Dev/vkbotpyth/blob/main/Tesseract-OCR/tesseract.exe'
 
 vk_session = vk_api.VkApi(token = '2649bbdb23bbecc3c2224e594d3cc0bda2076c995c7f71ab16b10b184e29023afd85534814ffd051942cc')
 longpoll = VkBotLongPoll(vk_session, '199223097')
