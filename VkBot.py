@@ -1,12 +1,8 @@
 import requests
 import vk_api, json
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-import cv2
-import pytesseract
 import random
 import os
-
-pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 vk_session = vk_api.VkApi(token = '2649bbdb23bbecc3c2224e594d3cc0bda2076c995c7f71ab16b10b184e29023afd85534814ffd051942cc')
 longpoll = VkBotLongPoll(vk_session, '199223097')
@@ -73,8 +69,156 @@ for event in longpoll.listen():
                 if sett == 'normal':
                     res = requests.get("http://api.openweathermap.org/data/2.5/find", {'q': city, 'lang': 'ru', 'units': 'metric', 'APPID': appid})
                     data = res.json()
-                    weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + ".\n" + "Температура: " + str(data['list'][0]['main']['temp']) + "°C")
-                    senderC(id, weath)
+                    print(data)
+                    strData = str(data)
+                    count = strData.count("'description'")
+                    wet_icon = str(data['list'][0]['weather'][0]['icon'])
+                    print(count)
+
+                    if count == 3:
+                        wet_icon = str(data['list'][0]['weather'][0]['icon'])
+                        wet_icon2 = str(data['list'][0]['weather'][1]['icon'])
+                        wet_icon3 = str(data['list'][0]['weather'][2]['icon'])
+
+                        if wet_icon == '01d' or wet_icon == '01n':
+                            icon = "&#9728;"
+                        if wet_icon == '02d' or wet_icon == '02n':
+                            icon = "&#127780;"
+                        if wet_icon == '03d' or wet_icon == '03n':
+                            icon = "&#9925;"
+                        if wet_icon == '04d' or wet_icon == '04n':
+                            icon = "&#9729;"
+                        if wet_icon == '09d' or wet_icon == '09n':
+                            icon = "&#127782;"
+                        if wet_icon == '10d' or wet_icon == '10n':
+                            icon = "&#127783;"
+                        if wet_icon == '11d' or wet_icon == '11n':
+                            icon = "&#127785;"
+                        if wet_icon == '13d' or wet_icon == '13n':
+                            icon = "&#127784;"
+                        if wet_icon == '50d' or wet_icon == '50n':
+                            icon = "&#127787;"
+
+                        if wet_icon2 == '01d' or wet_icon == '01n':
+                            icon2 = "&#9728;"
+                        if wet_icon2 == '02d' or wet_icon == '02n':
+                            icon2 = "&#127780;"
+                        if wet_icon2 == '03d' or wet_icon == '03n':
+                            icon2 = "&#9925;"
+                        if wet_icon2 == '04d' or wet_icon == '04n':
+                            icon2 = "&#9729;"
+                        if wet_icon2 == '09d' or wet_icon == '09n':
+                            icon2 = "&#127782;"
+                        if wet_icon2 == '10d' or wet_icon == '10n':
+                            icon2 = "&#127783;"
+                        if wet_icon2 == '11d' or wet_icon == '11n':
+                            icon2 = "&#127785;"
+                        if wet_icon2 == '13d' or wet_icon == '13n':
+                            icon2 = "&#127784;"
+                        if wet_icon2 == '50d' or wet_icon == '50n':
+                            icon2 = "&#127787;"
+
+                        if wet_icon3 == '01d' or wet_icon == '01n':
+                            icon3 = "&#9728;"
+                        if wet_icon3 == '02d' or wet_icon == '02n':
+                            icon3 = "&#127780;"
+                        if wet_icon3 == '03d' or wet_icon == '03n':
+                            icon3 = "&#9925;"
+                        if wet_icon3 == '04d' or wet_icon == '04n':
+                            icon3 = "&#9729;"
+                        if wet_icon3 == '09d' or wet_icon == '09n':
+                            icon3 = "&#127782;"
+                        if wet_icon3 == '10d' or wet_icon == '10n':
+                            icon3 = "&#127783;"
+                        if wet_icon3 == '11d' or wet_icon == '11n':
+                            icon3 = "&#127785;"
+                        if wet_icon3 == '13d' or wet_icon == '13n':
+                            icon3 = "&#127784;"
+                        if wet_icon3 == '50d' or wet_icon == '50n':
+                            icon3 = "&#127787;"
+
+                        weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + " " + icon + ", " + data['list'][0]['weather'][1]['description'] + " " + icon2 + ", " + data['list'][0]['weather'][2]['description'] + " " + icon3 + ".\n" 
+                             + "Температура: " + str(data['list'][0]['main']['temp']) + "°C." + "\n" 
+                             + "По ощущениям: " + str(data['list'][0]['main']['feels_like']) + "°C." + "\n"
+                             + "Влажность: " + str(data['list'][0]['main']['humidity']) + "%." + "\n"
+                             + "Скорость ветра: " + str(data['list'][0]['wind']['speed']) + "м/с.")
+                        senderC(id, weath)
+                    elif count == 2:
+                        wet_icon = str(data['list'][0]['weather'][0]['icon'])
+                        wet_icon2 = str(data['list'][0]['weather'][1]['icon'])
+
+                        if wet_icon == '01d' or wet_icon == '01n':
+                            icon = "&#9728;"
+                        if wet_icon == '02d' or wet_icon == '02n':
+                            icon = "&#127780;"
+                        if wet_icon == '03d' or wet_icon == '03n':
+                            icon = "&#9925;"
+                        if wet_icon == '04d' or wet_icon == '04n':
+                            icon = "&#9729;"
+                        if wet_icon == '09d' or wet_icon == '09n':
+                            icon = "&#127782;"
+                        if wet_icon == '10d' or wet_icon == '10n':
+                            icon = "&#127783;"
+                        if wet_icon == '11d' or wet_icon == '11n':
+                            icon = "&#127785;"
+                        if wet_icon == '13d' or wet_icon == '13n':
+                            icon = "&#127784;"
+                        if wet_icon == '50d' or wet_icon == '50n':
+                            icon = "&#127787;"
+
+                        if wet_icon2 == '01d' or wet_icon == '01n':
+                            icon2 = "&#9728;"
+                        if wet_icon2 == '02d' or wet_icon == '02n':
+                            icon2 = "&#127780;"
+                        if wet_icon2 == '03d' or wet_icon == '03n':
+                            icon2 = "&#9925;"
+                        if wet_icon2 == '04d' or wet_icon == '04n':
+                            icon2 = "&#9729;"
+                        if wet_icon2 == '09d' or wet_icon == '09n':
+                            icon2 = "&#127782;"
+                        if wet_icon2 == '10d' or wet_icon == '10n':
+                            icon2 = "&#127783;"
+                        if wet_icon2 == '11d' or wet_icon == '11n':
+                            icon2 = "&#127785;"
+                        if wet_icon2 == '13d' or wet_icon == '13n':
+                            icon2 = "&#127784;"
+                        if wet_icon2 == '50d' or wet_icon == '50n':
+                            icon2 = "&#127787;"
+
+                        weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + " " + icon + ", " + data['list'][0]['weather'][1]['description'] + " " + icon + ".\n" 
+                             + "Температура: " + str(data['list'][0]['main']['temp']) + "°C." + "\n" 
+                             + "По ощущениям: " + str(data['list'][0]['main']['feels_like']) + "°C." + "\n"
+                             + "Влажность: " + str(data['list'][0]['main']['humidity']) + "%." + "\n"
+                             + "Скорость ветра: " + str(data['list'][0]['wind']['speed']) + "м/с.")
+                        senderC(id, weath)
+                    else:
+                        wet_icon = str(data['list'][0]['weather'][0]['icon'])
+
+                        if wet_icon == '01d' or wet_icon == '01n':
+                            icon = "&#9728;"
+                        if wet_icon == '02d' or wet_icon == '02n':
+                            icon = "&#127780;"
+                        if wet_icon == '03d' or wet_icon == '03n':
+                            icon = "&#9925;"
+                        if wet_icon == '04d' or wet_icon == '04n':
+                            icon = "&#9729;"
+                        if wet_icon == '09d' or wet_icon == '09n':
+                            icon = "&#127782;"
+                        if wet_icon == '10d' or wet_icon == '10n':
+                            icon = "&#127783;"
+                        if wet_icon == '11d' or wet_icon == '11n':
+                            icon = "&#127785;"
+                        if wet_icon == '13d' or wet_icon == '13n':
+                            icon = "&#127784;"
+                        if wet_icon == '50d' or wet_icon == '50n':
+                            icon = "&#127787;"
+
+                        weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + " " + icon + ".\n" 
+                             + "Температура: " + str(data['list'][0]['main']['temp']) + "°C." + "\n" 
+                             + "По ощущениям: " + str(data['list'][0]['main']['feels_like']) + "°C." + "\n"
+                             + "Влажность: " + str(data['list'][0]['main']['humidity']) + "%." + "\n"
+                             + "Скорость ветра: " + str(data['list'][0]['wind']['speed']) + "м/с.")
+                        senderC(id, weath)
                 if sett == 'debug':
                     senderC(id, 'Проводится отладка бота, пожалуйста подождите.')
 
@@ -85,74 +229,7 @@ for event in longpoll.listen():
             print(msg)
             print(id)
 
-            if msg == '/text ru' or msg == '/text en' or msg == '/text':
-                history = vk_session.method("messages.getHistory", {'user_id':id, 'count':1})
-                attach = history['items'][0]['attachments']
-                print(attach)
-                check = len(attach)
-                print(check)
-                if check != 0:
-                    g = -1
-                    f = history['items'][0]['attachments'][0]['photo']['sizes'][-1]['type']
-                    
-                    if f != 'w':
-                        while f != 'w':
-                            if g == -8:
-                                break
-                            g = g - 1
-                            f = history['items'][0]['attachments'][0]['photo']['sizes'][g]['type']                    
-                    if f != 'w':
-                        g = -1
-                        while f != 'z':
-                            if g == -7:
-                                break
-                            g = g - 1
-                            f = history['items'][0]['attachments'][0]['photo']['sizes'][g]['type']
-                        if f != 'z':
-                            g = -1
-                            while f != 'y':
-                                g = g - 1
-                                f = history['items'][0]['attachments'][0]['photo']['sizes'][g]['type']
-
-                    photo_url = history['items'][0]['attachments'][0]['photo']['sizes'][g]['url']
-                    print(f)
-                    filename = photo_url.split('/')[-1]
-                    filename = filename[:filename.find('?')]              
-                    p = requests.get(photo_url)
-                    photo = open(filename, "wb")
-                    photo.write(p.content)
-                    photo.close()
-                    print(filename)
-
-                    config = r'--oem 3 --psm 6'
-                    if msg == '/text ru':
-                        img = cv2.imread(filename)
-                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                        ToP = str(pytesseract.image_to_string(img, lang = 'rus'))
-
-                    if msg == '/text en':
-                        img = cv2.imread(filename)
-                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                        ToP = str(pytesseract.image_to_string(img, lang = 'eng'))
-
-                    if msg == '/text':
-                        img = cv2.imread(filename)
-                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                        ToP = str(pytesseract.image_to_string(img, lang = 'eng+rus'))
-
-                    print(ToP)
-                    t = len(ToP)
-                    if t > 3:
-                        senderU(id, ToP)
-
-                    else:
-                        senderU(id, 'Текст не обнаружен.')
-
-                else:
-                    senderU(id, 'В сообщении не обнаружено вложение.')
-
-                os.remove(filename)
-
+            
             if msg == 'привет' or msg == '[club199223097|@vkbotm] привет':
                 f = open('Settings.txt', 'r')
                 sett = f.read()
@@ -178,8 +255,157 @@ for event in longpoll.listen():
                 if sett == 'normal':
                     res = requests.get("http://api.openweathermap.org/data/2.5/find", {'q': city, 'lang': 'ru', 'units': 'metric', 'APPID': appid})
                     data = res.json()
-                    weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + ".\n" + "Температура: " + str(data['list'][0]['main']['temp']) + "°C")
-                    senderU(id, weath)
+                    print(data)
+                    strData = str(data)
+                    count = strData.count("'description'")
+                    wet_icon = str(data['list'][0]['weather'][0]['icon'])
+                    print(count)
+
+                    if count == 3:
+                        wet_icon = str(data['list'][0]['weather'][0]['icon'])
+                        wet_icon2 = str(data['list'][0]['weather'][1]['icon'])
+                        wet_icon3 = str(data['list'][0]['weather'][2]['icon'])
+
+                        if wet_icon == '01d' or wet_icon == '01n':
+                            icon = "&#9728;"
+                        if wet_icon == '02d' or wet_icon == '02n':
+                            icon = "&#127780;"
+                        if wet_icon == '03d' or wet_icon == '03n':
+                            icon = "&#9925;"
+                        if wet_icon == '04d' or wet_icon == '04n':
+                            icon = "&#9729;"
+                        if wet_icon == '09d' or wet_icon == '09n':
+                            icon = "&#127782;"
+                        if wet_icon == '10d' or wet_icon == '10n':
+                            icon = "&#127783;"
+                        if wet_icon == '11d' or wet_icon == '11n':
+                            icon = "&#127785;"
+                        if wet_icon == '13d' or wet_icon == '13n':
+                            icon = "&#127784;"
+                        if wet_icon == '50d' or wet_icon == '50n':
+                            icon = "&#127787;"
+
+                        if wet_icon2 == '01d' or wet_icon == '01n':
+                            icon2 = "&#9728;"
+                        if wet_icon2 == '02d' or wet_icon == '02n':
+                            icon2 = "&#127780;"
+                        if wet_icon2 == '03d' or wet_icon == '03n':
+                            icon2 = "&#9925;"
+                        if wet_icon2 == '04d' or wet_icon == '04n':
+                            icon2 = "&#9729;"
+                        if wet_icon2 == '09d' or wet_icon == '09n':
+                            icon2 = "&#127782;"
+                        if wet_icon2 == '10d' or wet_icon == '10n':
+                            icon2 = "&#127783;"
+                        if wet_icon2 == '11d' or wet_icon == '11n':
+                            icon2 = "&#127785;"
+                        if wet_icon2 == '13d' or wet_icon == '13n':
+                            icon2 = "&#127784;"
+                        if wet_icon2 == '50d' or wet_icon == '50n':
+                            icon2 = "&#127787;"
+
+                        if wet_icon3 == '01d' or wet_icon == '01n':
+                            icon3 = "&#9728;"
+                        if wet_icon3 == '02d' or wet_icon == '02n':
+                            icon3 = "&#127780;"
+                        if wet_icon3 == '03d' or wet_icon == '03n':
+                            icon3 = "&#9925;"
+                        if wet_icon3 == '04d' or wet_icon == '04n':
+                            icon3 = "&#9729;"
+                        if wet_icon3 == '09d' or wet_icon == '09n':
+                            icon3 = "&#127782;"
+                        if wet_icon3 == '10d' or wet_icon == '10n':
+                            icon3 = "&#127783;"
+                        if wet_icon3 == '11d' or wet_icon == '11n':
+                            icon3 = "&#127785;"
+                        if wet_icon3 == '13d' or wet_icon == '13n':
+                            icon3 = "&#127784;"
+                        if wet_icon3 == '50d' or wet_icon == '50n':
+                            icon3 = "&#127787;"
+
+                        weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + " " + icon + ", " + data['list'][0]['weather'][1]['description'] + " " + icon2 + ", " + data['list'][0]['weather'][2]['description'] + " " + icon3 + ".\n" 
+                             + "Температура: " + str(data['list'][0]['main']['temp']) + "°C." + "\n" 
+                             + "По ощущениям: " + str(data['list'][0]['main']['feels_like']) + "°C." + "\n"
+                             + "Влажность: " + str(data['list'][0]['main']['humidity']) + "%." + "\n"
+                             + "Скорость ветра: " + str(data['list'][0]['wind']['speed']) + "м/с.")
+                        senderU(id, weath)
+                    elif count == 2:
+                        wet_icon = str(data['list'][0]['weather'][0]['icon'])
+                        wet_icon2 = str(data['list'][0]['weather'][1]['icon'])
+
+                        if wet_icon == '01d' or wet_icon == '01n':
+                            icon = "&#9728;"
+                        if wet_icon == '02d' or wet_icon == '02n':
+                            icon = "&#127780;"
+                        if wet_icon == '03d' or wet_icon == '03n':
+                            icon = "&#9925;"
+                        if wet_icon == '04d' or wet_icon == '04n':
+                            icon = "&#9729;"
+                        if wet_icon == '09d' or wet_icon == '09n':
+                            icon = "&#127782;"
+                        if wet_icon == '10d' or wet_icon == '10n':
+                            icon = "&#127783;"
+                        if wet_icon == '11d' or wet_icon == '11n':
+                            icon = "&#127785;"
+                        if wet_icon == '13d' or wet_icon == '13n':
+                            icon = "&#127784;"
+                        if wet_icon == '50d' or wet_icon == '50n':
+                            icon = "&#127787;"
+
+                        if wet_icon2 == '01d' or wet_icon == '01n':
+                            icon2 = "&#9728;"
+                        if wet_icon2 == '02d' or wet_icon == '02n':
+                            icon2 = "&#127780;"
+                        if wet_icon2 == '03d' or wet_icon == '03n':
+                            icon2 = "&#9925;"
+                        if wet_icon2 == '04d' or wet_icon == '04n':
+                            icon2 = "&#9729;"
+                        if wet_icon2 == '09d' or wet_icon == '09n':
+                            icon2 = "&#127782;"
+                        if wet_icon2 == '10d' or wet_icon == '10n':
+                            icon2 = "&#127783;"
+                        if wet_icon2 == '11d' or wet_icon == '11n':
+                            icon2 = "&#127785;"
+                        if wet_icon2 == '13d' or wet_icon == '13n':
+                            icon2 = "&#127784;"
+                        if wet_icon2 == '50d' or wet_icon == '50n':
+                            icon2 = "&#127787;"
+
+                        weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + " " + icon + ", " + data['list'][0]['weather'][1]['description'] + " " + icon + ".\n" 
+                             + "Температура: " + str(data['list'][0]['main']['temp']) + "°C." + "\n" 
+                             + "По ощущениям: " + str(data['list'][0]['main']['feels_like']) + "°C." + "\n"
+                             + "Влажность: " + str(data['list'][0]['main']['humidity']) + "%." + "\n"
+                             + "Скорость ветра: " + str(data['list'][0]['wind']['speed']) + "м/с.")
+                        senderU(id, weath)
+                    else:
+                        wet_icon = str(data['list'][0]['weather'][0]['icon'])
+
+                        if wet_icon == '01d' or wet_icon == '01n':
+                            icon = "&#9728;"
+                        if wet_icon == '02d' or wet_icon == '02n':
+                            icon = "&#127780;"
+                        if wet_icon == '03d' or wet_icon == '03n':
+                            icon = "&#9925;"
+                        if wet_icon == '04d' or wet_icon == '04n':
+                            icon = "&#9729;"
+                        if wet_icon == '09d' or wet_icon == '09n':
+                            icon = "&#127782;"
+                        if wet_icon == '10d' or wet_icon == '10n':
+                            icon = "&#127783;"
+                        if wet_icon == '11d' or wet_icon == '11n':
+                            icon = "&#127785;"
+                        if wet_icon == '13d' or wet_icon == '13n':
+                            icon = "&#127784;"
+                        if wet_icon == '50d' or wet_icon == '50n':
+                            icon = "&#127787;"
+
+                        weath = ("Атмосферные условия: " + data['list'][0]['weather'][0]['description'] + " " + icon + ".\n" 
+                             + "Температура: " + str(data['list'][0]['main']['temp']) + "°C." + "\n" 
+                             + "По ощущениям: " + str(data['list'][0]['main']['feels_like']) + "°C." + "\n"
+                             + "Влажность: " + str(data['list'][0]['main']['humidity']) + "%." + "\n"
+                             + "Скорость ветра: " + str(data['list'][0]['wind']['speed']) + "м/с.")
+                        senderU(id, weath)
+                    
                 if sett == 'debug':
                     senderU(id, 'Проводится отладка бота, пожалуйста подождите.')
 
